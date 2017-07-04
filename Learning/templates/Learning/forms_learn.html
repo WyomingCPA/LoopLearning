@@ -1,0 +1,23 @@
+﻿{% extends "Learning/base.html" %}
+
+{% block content %}
+      <div class="row">
+        <div class="col-md-6">
+          <!-- Block buttons -->
+          <div class="box">
+            <div class="box-header">
+            </div>
+            <div class="box-body">
+                <form enctype="multipart/form-data" method="post" action="{% url 'add_learn_form_action' %}">
+                    {% csrf_token %}
+                     <label for="exampleInputFile">File input</label>
+                     <input type="file" id="exampleInputFile" name="my_uploaded_file">
+
+                     <button type="submit" class="btn btn-default btn-block btn-sm">Отправить</button>
+                </form>
+            </div>
+          </div>
+          <!-- /.box -->
+        </div>
+    </div>
+{% endblock %}
