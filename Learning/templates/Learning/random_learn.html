@@ -1,18 +1,17 @@
 {% extends "Learning/base.html" %}
 
 {% block content %}
-
       <div class="row">
         <div class="col-md-6">
           <!-- Block buttons -->
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Random Lesson</h3>
+              <h3 class="box-title">Random Lesson - amount read now <b>{{lesson.count}}</b></h3>
             </div>
             <div class="box-body">
                 <form method="post" action="{% url 'action' %}">
                     {% csrf_token %}
-                    <h2>{{ lesson.title }}         ------> amount read now {{lesson.count}} </h2>
+                    <h2>{{ lesson.title }}</h2>
 
                     <a href="{{ lesson.url }}" class="btn btn-danger btn-block btn-flat" role="button" target="_blank">Read</a>
                     <button type="submit" class="btn btn-default btn-block btn-flat" name="i_read" value="{{ lesson.id }}">I read</button>

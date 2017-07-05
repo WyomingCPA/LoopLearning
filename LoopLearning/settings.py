@@ -26,7 +26,7 @@ SECRET_KEY = '183166d5-8ca9-4e0d-9d2f-13d00d1ee2ce'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['81.177.140.90', 'localhost', '127.0.0.1', 'looplearning.wyomingcpa.ru']
 
 
 # Application definition

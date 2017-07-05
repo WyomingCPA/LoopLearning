@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
 from .models import Lesson, Category, TodayCount
+from django.db.models import Avg, Max, Min
 
 from datetime import datetime, timedelta
 import time
@@ -14,15 +15,19 @@ from xml.etree.ElementTree import fromstring, ElementTree
 
 @login_required(login_url='/admin/')
 def index(request):
+    category = Category.objects.all()
     day = time.strftime("%Y-%m-%d")
-    day_count = TodayCount.objects.filter(day__istartswith=day).first()
-    return render(request, 'Learning/index.html', {'day_count': day_count.count })
+    try:
+        day_count = TodayCount.objects.filter(day__istartswith=day).first().count
+    except:
+        day_count = 0
+
+    return render(request, 'Learning/index.html', {'day_count': day_count, 'category' : category })
 
 @login_required(login_url='/admin/')
-def CSharpLoopLearn(request):
-    category = Category.objects.get(name = 'CSharp')
-    lesson = Lesson.objects.filter(category = category).order_by('?').first()
-
+def random_learn(request, slug):
+    category = Category.objects.get(name = slug)
+    lesson = Lesson.objects.filter(category = category).annotate(Min('count')).order_by('?').first()
     return render(request, 'Learning/random_learn.html', {'lesson': lesson })
 
 def action(request):
@@ -52,6 +57,7 @@ def action(request):
 
 
 def add_learn_form(request):
+
      return render(request, 'Learning/forms_learn.html', )
 
 def add_learn_form_action(request):
@@ -77,9 +83,5 @@ def add_learn_form_action(request):
         return redirect('/')
     else:
         return redirect('/')
-
-
-
-
 
     return render(request, 'Learning/forms_learn.html', )
