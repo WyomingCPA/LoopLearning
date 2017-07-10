@@ -44,11 +44,11 @@ def action(request):
         if (amount_day_filter != None):       
             amount_day_filter.count =  amount_day_filter.count + 1
             amount_day_filter.save()
-            return redirect('/CSharp/')
+            return redirect('/')
         else:
             amount_day_new = TodayCount()
             amount_day_new.save()
-            return redirect('/CSharp/')
+            return redirect('/')
 
     if 'next' in request.POST:
         return redirect('/CSharp/')
