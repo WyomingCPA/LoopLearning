@@ -27,7 +27,7 @@ def index(request):
 @login_required(login_url='/admin/')
 def random_learn(request, slug):
     category = Category.objects.get(name = slug)
-    lesson = Lesson.objects.filter(category = category).annotate(Min('count')).order_by('?').first()
+    lesson = Lesson.objects.filter(category = category).order_by('count').first()
     return render(request, 'Learning/random_learn.html', {'lesson': lesson })
 
 def action(request):

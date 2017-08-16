@@ -7,6 +7,9 @@ class Lesson(models.Model):
     count = models.IntegerField(default = 0)
     category = models.ForeignKey('Category')
 
+    def __unicode__(self):
+        return self.title
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -16,3 +19,4 @@ class Category(models.Model):
 class TodayCount(models.Model):
     day = models.DateTimeField(auto_now = True)
     count = models.IntegerField(default = 0)
+
