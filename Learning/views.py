@@ -12,6 +12,7 @@ import time
 
 from xml.etree.ElementTree import fromstring, ElementTree
 
+import random
 
 @login_required(login_url='/admin/')
 def index(request):
@@ -27,10 +28,16 @@ def index(request):
 @login_required(login_url='/admin/')
 def random_learn(request, slug):
     category = Category.objects.get(name = slug)
-    lesson = Lesson.objects.filter(category = category).order_by('count').first()
-    return render(request, 'Learning/random_learn.html', {'lesson': lesson })
+    lesson = list(Lesson.objects.filter(category = category).values())
+
+    random.shuffle(lesson)
+    lesson_srez = lesson[:10]
+    min_val = min(lesson_srez, key=lambda x:x['count'])
+
+    return render(request, 'Learning/random_learn.html', {'lesson': min_val })
 
 def action(request):
+
     if 'i_read' in request.POST:
         id = request.POST.getlist('i_read')
         lesson = Lesson.objects.get(id=int(id[0]))
@@ -50,8 +57,12 @@ def action(request):
             amount_day_new.save()
             return redirect('/')
 
-    if 'next' in request.POST:
-        return redirect('/CSharp/')
+    if 'delete' in request.POST:
+        id = request.POST.getlist('delete')
+        lesson = Lesson.objects.get(id=int(id[0]))
+        lesson.delete()
+
+        return redirect('/')
 
     return render(request, 'Learning/index.html', )
 
