@@ -3,6 +3,13 @@
 {% block content %}
     <div class="row">
         <div class="col-lg-3 col-xs-6">
+            {% for item in category %}
+            <ul>
+                <li class="active"><a href="{% url 'random_learn' item.name %}"><i class="fa fa-link"></i> <span>{{item.name}}</span></a></li>
+            </ul>    
+             {% endfor %} 
+        </div>
+        <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
@@ -12,8 +19,7 @@
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
-            </div>
-           
+            </div>       
           </div>
        </div>
     </div>
