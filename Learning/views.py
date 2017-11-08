@@ -25,6 +25,32 @@ def index(request):
 
     return render(request, 'Learning/index.html', {'day_count': day_count, 'category' : category })
 
+
+@login_required(login_url='/admin/')
+def list_index(request):
+    category = Category.objects.all()
+    return render(request, 'Learning/list_index.html', {'category' : category })
+
+@login_required(login_url='/admin/')
+def list_table(request, slug):
+    category = Category.objects.get(name = slug)
+    lesson = Lesson.objects.filter(category = category).values().order_by('time_update')
+
+    paginator = Paginator(lesson, 50)
+    page = request.GET.get('page')
+    try:
+        lesson = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        lesson = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        lesson = paginator.page(paginator.num_pages)
+
+
+    return render(request, 'Learning/list_table.html', {'lesson' : lesson })
+
+
 @login_required(login_url='/admin/')
 def random_learn(request, slug):
     category = Category.objects.get(name = slug)
@@ -94,5 +120,17 @@ def add_learn_form_action(request):
         return redirect('/')
     else:
         return redirect('/')
-
     return render(request, 'Learning/forms_learn.html', )
+
+
+@login_required(login_url='/admin/')
+def action_learn_table(request):
+    if request.method == 'POST':
+        pointer_lesson = request.POST.getlist('pointer_lesson[]')
+        for item in pointer_lesson:
+            lesson = Lesson.objects.get(id=int(item))
+            lesson.time_update = datetime.now()
+            lesson.count = lesson.count + 1
+            lesson.save()            
+
+    return redirect('/list/')

@@ -1,4 +1,4 @@
-{% load staticfiles %}
+﻿{% load staticfiles %}
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -163,8 +163,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
         </div>
       </form>
@@ -178,7 +177,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
              {% for item in category %}
                 <li class="active"><a href="{% url 'random_learn' item.name %}"><i class="fa fa-link"></i> <span>{{item.name}}</span></a></li>
              {% endfor %} 
-            
+           
+            <li class="active"><a href="{% url 'list_index' %}"><i class="fa fa-link"></i> <span>Список уроков</span></a></li>
             <li class="active"><a href="{% url 'add_learn_form' %}"><i class="fa fa-link"></i> <span>Добавить уроки</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->

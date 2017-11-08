@@ -1,0 +1,69 @@
+﻿{% extends "Learning/base.html" %}
+{% load humanize %}
+{% block content %}
+ <section class="content">
+    <div class="row">
+        <div class="col-md-9">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Уроки</h3>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+              <form method="post" action="{% url 'action_learn_table' %}">
+                  {% csrf_token %}
+                <div class="btn-group">
+                    <input type="submit" value="Прочитал">
+                </div>
+                                  <!-- /.btn-group -->               
+                <div class="pull-right">
+
+                  {{ lesson.number }}/{{ lesson.paginator.num_pages }}
+                  <div class="btn-group">
+                    {% if lesson.has_previous %}
+                        <button type="button" class="btn btn-default btn-sm" onclick="location.href = '?page={{ lesson.previous_page_number }}'"><i class="fa fa-chevron-left"></i></button> 
+                    {% endif %}   
+                    {% if lesson.has_next %}
+                       <button type="button" class="btn btn-default btn-sm" onclick="location.href = '?page={{ lesson.next_page_number }}'"><i class="fa fa-chevron-right"></i></button>
+                   {% endif %}               
+                  </div>
+                  <!-- /.btn-group -->
+                </div>
+                <!-- /.pull-right -->
+                <div class="box-body no-padding">
+                    <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover table-striped">
+                            <tbody>
+                                {% for item in lesson %}
+                                <tr>
+                                    <td><input type="checkbox" name="pointer_lesson[]" value="{{item.id}}"></td>
+                                    <td class="mailbox-name"><a href="{{ item.url }}">{{ item.title }}</a></td>
+                                    <td class="mailbox-subject"><b>{{ item.category }}</b></td>
+                                    <td class="mailbox-subject"><a href="{{ item.url }}" target="_blank">Открыть на сайте</a></td>
+                                    <td class="mailbox-attachment"></td>
+                                    <td class="mailbox-date">{{ item.time_update }}</td>
+                                </tr>
+                                {% endfor %}                     
+                            </tbody>
+                        </table>
+                <!-- /.table -->
+              </div>
+              <!-- /.mail-box-messages -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer no-padding">
+              <div class="mailbox-controls">
+                <!-- Check all button -->
+                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+                </button>
+
+              </div>
+            </div>
+
+          </form>
+          </div>
+          <!-- /. box -->
+        </div>
+    </div>                            
+ </section>
+{% endblock %}
