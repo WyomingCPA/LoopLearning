@@ -62,6 +62,25 @@ def random_learn(request, slug):
 
     return render(request, 'Learning/random_learn.html', {'lesson': min_val })
 
+@login_required(login_url='/admin/')
+def statistic_category(request):
+    category = Category.objects.all()
+
+    learn_compleated_category = []
+
+    for item_category in category:
+        lesson = list(Lesson.objects.filter(category = item_category).values())
+        count_all_category = len(lesson)
+        count_compleated_category = 0
+        for item_lesson in lesson:
+            if (item_lesson['count'] != 0):
+                count_compleated_category += 1
+
+        learn_compleated_item = {'category' : item_category.name, 'count_all_category' : count_all_category, 'count_compleated_category' : count_compleated_category}
+        learn_compleated_category.append(learn_compleated_item)
+        
+    return render(request, 'Learning/statistic.html', {'learn_compleated_category': learn_compleated_category })
+
 def action(request):
 
     if 'i_read' in request.POST:
