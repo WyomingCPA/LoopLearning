@@ -99,6 +99,7 @@ def action(request):
             return redirect('/')
         else:
             amount_day_new = TodayCount()
+            amount_day_filter.count =  amount_day_filter.count + 1
             amount_day_new.save()
             return redirect('/')
 
@@ -150,6 +151,17 @@ def action_learn_table(request):
             lesson = Lesson.objects.get(id=int(item))
             lesson.time_update = datetime.now()
             lesson.count = lesson.count + 1
-            lesson.save()            
+            lesson.save()
+            
+            day = time.strftime("%Y-%m-%d")
+            amount_day_filter = TodayCount.objects.filter(day__istartswith=day).first()
+            if (amount_day_filter != None):       
+                amount_day_filter.count =  amount_day_filter.count + 1
+                amount_day_filter.save()
+                return redirect('/')
+            else:
+                amount_day_new = TodayCount()
+                amount_day_new.save()
+                return redirect('/')            
 
     return redirect('/list/')
