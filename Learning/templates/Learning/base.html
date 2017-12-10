@@ -174,10 +174,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li class="header">Меню</li>
         <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="{% url 'index' %}"><i class="fa fa-link"></i> <span>Count</span></a></li>
-             {% for item in category %}
-                <li class="active"><a href="{% url 'random_learn' item.name %}"><i class="fa fa-link"></i> <span>{{item.name}}</span></a></li>
-             {% endfor %} 
-           
+            <li class="active"><a href="{% url 'random_list_category' %}"><i class="fa fa-link"></i> <span>Случайное изучение</span></a></li>
+            <li class="active"><a href="{% url 'random_list_repeat_category' %}"><i class="fa fa-link"></i> <span>Повторение пройденного</span></a></li>
             <li class="active"><a href="{% url 'list_index' %}"><i class="fa fa-link"></i> <span>Список уроков</span></a></li>
             <li class="active"><a href="{% url 'statistic_category' %}"><i class="fa fa-link"></i> <span>Статистика</span></a></li>
             <li class="active"><a href="{% url 'add_learn_form' %}"><i class="fa fa-link"></i> <span>Добавить уроки</span></a></li>

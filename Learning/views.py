@@ -63,6 +63,28 @@ def random_learn(request, slug):
     return render(request, 'Learning/random_learn.html', {'lesson': min_val })
 
 @login_required(login_url='/admin/')
+def random_repeat_learn(request, slug):
+    category = Category.objects.get(name = slug)
+    lesson = list(Lesson.objects.filter(category = category, count__gt = 0,).values().order_by('time_update')[0:5])
+
+    random.shuffle(lesson)
+    min_val = min(lesson, key=lambda x:x['count'])
+
+    return render(request, 'Learning/random_learn.html', {'lesson': min_val })
+
+
+
+@login_required(login_url='/admin/')
+def random_list_category(request):
+    category = Category.objects.all()
+    return render(request, 'Learning/random.html', { 'category' : category })
+
+@login_required(login_url='/admin/')
+def random_list_repeat_category(request):
+    category = Category.objects.all()
+    return render(request, 'Learning/random_repeat_category.html', { 'category' : category })
+
+@login_required(login_url='/admin/')
 def statistic_category(request):
     category = Category.objects.all()
 
@@ -99,7 +121,6 @@ def action(request):
             return redirect('/')
         else:
             amount_day_new = TodayCount()
-            amount_day_filter.count =  amount_day_filter.count + 1
             amount_day_new.save()
             return redirect('/')
 
@@ -114,7 +135,7 @@ def action(request):
 
 
 def add_learn_form(request):
-
+     
      return render(request, 'Learning/forms_learn.html', )
 
 def add_learn_form_action(request):
@@ -158,10 +179,10 @@ def action_learn_table(request):
             if (amount_day_filter != None):       
                 amount_day_filter.count =  amount_day_filter.count + 1
                 amount_day_filter.save()
-                return redirect('/')
+                return redirect('/list/')
             else:
                 amount_day_new = TodayCount()
                 amount_day_new.save()
-                return redirect('/')            
+                return redirect('/list/')            
 
     return redirect('/list/')

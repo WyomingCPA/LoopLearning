@@ -55,7 +55,10 @@
     <Content Include="Learning\templates\Learning\index.html" />
     <Content Include="Learning\templates\Learning\list_index.html" />
     <Content Include="Learning\templates\Learning\list_table.html" />
+    <Content Include="Learning\templates\Learning\random.html" />
     <Content Include="Learning\templates\Learning\random_learn.html" />
+    <Content Include="Learning\templates\Learning\random_repeat_category.html" />
+    <Content Include="Learning\templates\Learning\random_repeat_learn.html" />
     <Content Include="Learning\templates\Learning\statistic.html" />
     <Content Include="requirements.txt" />
   </ItemGroup>
