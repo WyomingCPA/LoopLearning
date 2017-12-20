@@ -72,8 +72,6 @@ def random_repeat_learn(request, slug):
 
     return render(request, 'Learning/random_learn.html', {'lesson': min_val })
 
-
-
 @login_required(login_url='/admin/')
 def random_list_category(request):
     category = Category.objects.all()
@@ -100,8 +98,10 @@ def statistic_category(request):
 
         learn_compleated_item = {'category' : item_category.name, 'count_all_category' : count_all_category, 'count_compleated_category' : count_compleated_category}
         learn_compleated_category.append(learn_compleated_item)
-        
-    return render(request, 'Learning/statistic.html', {'learn_compleated_category': learn_compleated_category })
+    
+    severn_day_count = TodayCount.objects.all().values().order_by('-day')[0:7]
+            
+    return render(request, 'Learning/statistic.html', {'learn_compleated_category': learn_compleated_category, 'severn_day_count': severn_day_count.reverse() })
 
 def action(request):
 
