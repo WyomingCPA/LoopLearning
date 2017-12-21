@@ -65,7 +65,7 @@
         var areaChart = new Chart(areaChartCanvas);
 
         var areaChartData = {
-            labels: [{% for item in severn_day_count %}"{{ item.day }}", {% endfor %}],
+            labels: [{% for item in severn_day_count reversed %}"{{ item.day }}", {% endfor %}],
             datasets: [
               {
                   label: "Прочитано тем",
@@ -75,7 +75,7 @@
                   pointStrokeColor: "rgba(60,141,188,1)",
                   pointHighlightFill: "#fff",
                   pointHighlightStroke: "rgba(60,141,188,1)",
-                  data: [{% for item in severn_day_count %}"{{ item.count }}", {% endfor %}]
+                  data: [{% for item in severn_day_count reversed %}"{{ item.count }}", {% endfor %}]
               }
             ]
         };

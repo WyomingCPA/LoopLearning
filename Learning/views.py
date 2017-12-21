@@ -99,7 +99,7 @@ def statistic_category(request):
         learn_compleated_item = {'category' : item_category.name, 'count_all_category' : count_all_category, 'count_compleated_category' : count_compleated_category}
         learn_compleated_category.append(learn_compleated_item)
     
-    severn_day_count = TodayCount.objects.all().values().order_by('day')[0:7]
+    severn_day_count = TodayCount.objects.all().values().order_by('-day')[:10]
             
     return render(request, 'Learning/statistic.html', {'learn_compleated_category': learn_compleated_category, 'severn_day_count': severn_day_count })
 
