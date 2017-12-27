@@ -1,7 +1,10 @@
 from django.db import models
 
+
+
 class Lesson(models.Model):
     title = models.CharField(max_length=300)
+    resume = models.TextField(blank=True)
     url = models.CharField(max_length=200)
     time_update = models.DateTimeField(null=True, blank=True)
     count = models.IntegerField(default = 0)

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-
+from django.utils import timezone
 from django.shortcuts import get_object_or_404
 
 from .models import Lesson, Category, TodayCount
@@ -17,7 +17,7 @@ import random
 @login_required(login_url='/admin/')
 def index(request):
     category = Category.objects.all()
-    day = time.strftime("%Y-%m-%d")
+    day = timezone.datetime.now().strftime("%Y-%m-%d")
     try:
         day_count = TodayCount.objects.filter(day__istartswith=day).first().count
     except:
@@ -108,11 +108,11 @@ def action(request):
     if 'i_read' in request.POST:
         id = request.POST.getlist('i_read')
         lesson = Lesson.objects.get(id=int(id[0]))
-        lesson.time_update = datetime.now()
+        lesson.time_update = timezone.datetime.now()
         lesson.count = lesson.count + 1
         lesson.save()
 
-        day = time.strftime("%Y-%m-%d")
+        day = datetime.now().strftime("%Y-%m-%d")
 
         amount_day_filter = TodayCount.objects.filter(day__istartswith=day).first()
         if (amount_day_filter != None):       
@@ -170,11 +170,11 @@ def action_learn_table(request):
         pointer_lesson = request.POST.getlist('pointer_lesson[]')
         for item in pointer_lesson:
             lesson = Lesson.objects.get(id=int(item))
-            lesson.time_update = datetime.now()
+            lesson.time_update = timezone.datetime.now()
             lesson.count = lesson.count + 1
             lesson.save()
             
-            day = time.strftime("%Y-%m-%d")
+            day = timezone.datetime.now().strftime("%Y-%m-%d")
             amount_day_filter = TodayCount.objects.filter(day__istartswith=day).first()
             if (amount_day_filter != None):       
                 amount_day_filter.count =  amount_day_filter.count + 1
