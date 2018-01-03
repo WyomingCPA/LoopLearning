@@ -32,10 +32,13 @@ class LessonAdmin(admin.ModelAdmin):
         return '<a href="%s" target="_blank">%s</a>' % (obj.url, obj.url)
 
     def show_lesson_resume(self, obj):
-        if (len(obj.resume) != 0):
-            dialog = '<a href="#" id="opener-%s" >resume-%s</a><div id="dialog-%s" title="resume" style="float:left; margin:0 7px 50px 0;display:none;">%s</div>' % (self.item_row, self.item_row, self.item_row, obj.resume)
-            self.item_row += 1
-            return dialog 
+        try:
+            if (len(obj.resume) != 0):
+                dialog = '<a href="#" id="opener-%s" >resume-%s</a><div id="dialog-%s" title="resume" style="float:left; margin:0 7px 50px 0;display:none;">%s</div>' % (self.item_row, self.item_row, self.item_row, obj.resume)
+                self.item_row += 1
+                return dialog
+        except:
+            pass     
 
     def make_published(modeladmin, request, queryset):
         for obj in queryset:
