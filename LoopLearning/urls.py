@@ -2,7 +2,6 @@ from datetime import datetime
 from django.contrib import admin
 from django.conf.urls import url, include
 import django.contrib.auth.views
-
 from Learning.views import index, list_table, list_index, random_learn, action, add_learn_form, add_learn_form_action, action_learn_table, statistic_category, random_list_category, random_list_repeat_category, random_repeat_learn
 
 urlpatterns = [
@@ -18,5 +17,6 @@ urlpatterns = [
     url(r'^action/', action, name='action'),
     url(r'^add_learn/', add_learn_form, name = 'add_learn_form'),
     url(r'^add_learn_action/', add_learn_form_action, name = 'add_learn_form_action'),
-    url(r'^action_learn_table/', action_learn_table, name = 'action_learn_table')
+    url(r'^action_learn_table/', action_learn_table, name = 'action_learn_table'),
+    url(r'^tinymce/', include('tinymce.urls')),
 ]
