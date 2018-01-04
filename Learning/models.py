@@ -7,7 +7,7 @@ class Lesson(models.Model):
     resume = models.TextField(blank=True)
     url = models.CharField(max_length=200)
     time_update = models.DateTimeField(null=True, blank=True)
-    count = models.IntegerField(default = 0)
+    count = models.FloatField(default = 0)
     category = models.ForeignKey('Category')
 
     def __unicode__(self):
@@ -21,5 +21,5 @@ class Category(models.Model):
 
 class TodayCount(models.Model):
     day = models.DateTimeField(auto_now = True)
-    count = models.IntegerField(default = 0)
+    count = models.FloatField(default = 0)
 

@@ -18,5 +18,4 @@ urlpatterns = [
     url(r'^add_learn/', add_learn_form, name = 'add_learn_form'),
     url(r'^add_learn_action/', add_learn_form_action, name = 'add_learn_form_action'),
     url(r'^action_learn_table/', action_learn_table, name = 'action_learn_table'),
-    url(r'^tinymce/', include('tinymce.urls')),
 ]

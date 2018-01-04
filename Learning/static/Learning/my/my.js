@@ -10,7 +10,13 @@
             height: 500,
         });
 
-        return false;
-        
+        return false;      
     });
+
+    tinymce.init({
+        selector: "textarea",  // change this value according to your HTML
+        plugins: "codesample",
+        toolbar: "codesample"
+    });
+
 });
