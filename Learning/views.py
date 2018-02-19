@@ -57,8 +57,7 @@ def random_learn(request, slug):
     lesson = list(Lesson.objects.filter(category = category).values())
 
     random.shuffle(lesson)
-    lesson_srez = lesson[:10]
-    min_val = min(lesson_srez, key=lambda x:x['count'])
+    min_val = min(lesson, key=lambda x:x['count'])
 
     return render(request, 'Learning/random_learn.html', {'lesson': min_val })
 

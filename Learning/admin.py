@@ -36,7 +36,7 @@ class ResumeListFilter(admin.SimpleListFilter):
 
      
 class LessonAdmin(admin.ModelAdmin):
-    search_fields = ['title']
+    search_fields = ['title', 'url']
     list_display = ('title', 'category', 'show_lesson_url', 'show_lesson_resume','time_update', 'count')
     list_filter = ('category', 'count', ResumeListFilter)
     actions = ['make_published', 'resume_text_read']
