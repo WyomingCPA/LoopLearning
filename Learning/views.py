@@ -69,7 +69,7 @@ def random_repeat_learn(request, slug):
     random.shuffle(lesson)
     min_val = min(lesson, key=lambda x:x['count'])
 
-    return render(request, 'Learning/random_learn.html', {'lesson': min_val })
+    return render(request, 'Learning/random_repeat_learn.html', {'lesson': min_val })
 
 @login_required(login_url='/admin/')
 def random_list_category(request):
@@ -129,6 +129,36 @@ def action(request):
         lesson.delete()
 
         return redirect('/')
+
+    return render(request, 'Learning/index.html', )
+
+def action_repeat(request):
+
+    if 'i_read' in request.POST:
+        id = request.POST.getlist('i_read')
+        lesson = Lesson.objects.get(id=int(id[0]))
+        lesson.time_update = timezone.datetime.now()
+        lesson.count = lesson.count + 1
+        lesson.save()
+
+        day = datetime.now().strftime("%Y-%m-%d")
+
+        amount_day_filter = TodayCount.objects.filter(day__istartswith=day).first()
+        if (amount_day_filter != None):       
+            amount_day_filter.count =  amount_day_filter.count + 1
+            amount_day_filter.save()
+            return redirect('/random/repeat/category/')
+        else:
+            amount_day_new = TodayCount()
+            amount_day_new.save()
+            return redirect('/random/repeat/category/')
+
+    if 'delete' in request.POST:
+        id = request.POST.getlist('delete')
+        lesson = Lesson.objects.get(id=int(id[0]))
+        lesson.delete()
+
+        return redirect('/random/repeat/category/')
 
     return render(request, 'Learning/index.html', )
 

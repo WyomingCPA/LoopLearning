@@ -9,7 +9,7 @@
               <h3 class="box-title">Random Lesson - amount read now <b>{{lesson.count}}</b></h3>
             </div>
             <div class="box-body">
-                <form method="post" action="{% url 'action' %}">
+                <form method="post" action="{% url 'action_repeat' %}">
                     {% csrf_token %}
                     <h2>{{ lesson.title }}</h2>
 
